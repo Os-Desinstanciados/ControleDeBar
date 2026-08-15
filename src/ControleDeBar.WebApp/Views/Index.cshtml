@@ -1,0 +1,73 @@
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Página Inicial";
+}
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <h1 class="display-5 fw-semibold mb-3">Controle de Bar</h1>
+
+        <p class="lead text-secondary mb-4">
+            Gerencie seus clientes, garçons, mesas, produtos e contas conosco.
+        </p>
+
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-primary rounded-pill px-4"
+               asp-controller="Produto"
+               asp-action="Listar">
+                Produtos
+            </a>
+
+            <a class="btn btn-outline-primary rounded-pill px-4"
+               asp-controller="Conta"
+               asp-action="Listar">
+                Contas
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card border-primary-subtle shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="h5 text-primary mb-3">Módulos disponíveis</h3>
+
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                       asp-controller="Cliente"
+                       asp-action="Listar">
+                        Clientes
+                        <span class="badge text-bg-primary rounded-pill">Abrir</span>
+                    </a>
+
+                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                       asp-controller="Garçom"
+                       asp-action="Listar">
+                        Garçoms
+                        <span class="badge text-bg-primary rounded-pill">Abrir</span>
+                    </a>
+
+                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                       asp-controller="Mesa"
+                       asp-action="Listar">
+                        Mesas
+                        <span class="badge text-bg-primary rounded-pill">Abrir</span>
+                    </a>
+
+                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                       asp-controller="Produto"
+                       asp-action="Listar">
+                        Produtos
+                        <span class="badge text-bg-primary rounded-pill">Abrir</span>
+                    </a>
+
+                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                       asp-controller="Conta"
+                       asp-action="Listar">
+                        Contas
+                        <span class="badge text-bg-primary rounded-pill">Abrir</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
