@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ControleDeBar.WebApp.Compartilhado.Apresentacao;
+namespace ControleDeBar.WebApp.Compartilhado;
 
 public class HomeController : Controller
 {
