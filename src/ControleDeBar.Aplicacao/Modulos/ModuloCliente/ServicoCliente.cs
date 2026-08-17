@@ -33,6 +33,28 @@ public class ServicoCliente : ServicoBase<Cliente>
         return Result.Ok();
     }
 
+    public Result Editar(EditarClienteDto dto)
+    {
+        if (ExisteClienteComMesmoNome(dto.Nome))
+            return Falha(nameof(dto.Nome), "Já existe um cliente com este nome.");
+
+        Cliente clienteAtualizado = new Cliente(
+            dto.Nome
+        );
+        
+        Result resultadoValidacao = ValidarEntidade(clienteAtualizado);
+
+        if(resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        bool conseguiuEditar = repositorioCliente.Editar(dto.Id, clienteAtualizado);
+
+        if (!conseguiuEditar)
+            return Falha(string.Empty, "Cliente não encontrado.");
+        
+        return Result.Ok();
+    }
+    
     public Result Excluir(Guid id)
     {
         Cliente? cliente = repositorioCliente.SelecionarPorId(id);

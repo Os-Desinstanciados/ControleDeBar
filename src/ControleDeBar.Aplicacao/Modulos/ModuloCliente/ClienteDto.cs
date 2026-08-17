@@ -7,3 +7,8 @@ public record ListarClientesDto(
 public record CadastrarClienteDto(
     string Nome
 );
+
+public record EditarClienteDto(
+    Guid Id,
+    string Nome
+);
