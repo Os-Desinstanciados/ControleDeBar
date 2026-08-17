@@ -74,7 +74,7 @@ public class ServicoGarcom : ServicoBase<Garcom>
     {
         return repositorioGarcom
             .SelecionarTodos()
-            .Select(c => new ListarGarconsDto(c.Id, c.Nome))
+            .Select(g => new ListarGarconsDto(g.Id, g.Nome))
             .ToList();
     }
 
@@ -94,9 +94,9 @@ public class ServicoGarcom : ServicoBase<Garcom>
 
         return repositorioGarcom
             .SelecionarTodos()
-            .Any(c =>
-                c.Id != idIgnorado &&
-                NormalizarNome(c.Nome) == nomeNormalizado
+            .Any(g =>
+                g.Id != idIgnorado &&
+                NormalizarNome(g.Nome) == nomeNormalizado
             );
     }
 
@@ -104,7 +104,7 @@ public class ServicoGarcom : ServicoBase<Garcom>
     //{
         //return repositorioConta
           //  .SelecionarTodos()
-            //.Any(d => d.Garcons.Any(c => c.Id == garcomId));
+            //.Any(d => g.Garcons.Any(c => g.Id == garcomId));
     //}
 
     private static string NormalizarNome(string nome)
