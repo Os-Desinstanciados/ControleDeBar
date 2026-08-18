@@ -1,5 +1,6 @@
 using ControleDeBar.Dominio.Modulos.ModuloGarcom;
 using ControleDeBar.Infra.Modulos.ModuloGarcom;
+using ControleDeBar.Dominio.Modulos.ModuloCliente;
 using ControleDeBar.Infra.Comartilhado.Logging;
 using ControleDeBar.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
@@ -47,5 +48,7 @@ public static class InjecaoDependencia
 
        services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>(); 
        services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>(); 
+        services.AddScoped<IRepositorioCliente, RepositorioClienteEmOrm>();
+        
     }
 }

@@ -1,4 +1,5 @@
 using ControleDeBar.Dominio.Modulos.ModuloGarcom;
+using ControleDeBar.Dominio.Modulos.ModuloCliente;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -9,6 +10,7 @@ public sealed class ControleDeBarDbContext(
     ) : DbContext(options)
 {
     public DbSet<Garcom> Garcons => Set<Garcom>();
+    public DbSet<Cliente> Clientes => Set<Cliente>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
