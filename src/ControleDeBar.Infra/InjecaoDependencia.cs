@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using ControleDeBar.Dominio.Modulos.ModuloMesa;
+using ControleDeBar.Infra.Modulos.ModuloMesa;
 
 namespace ControleDeBar.Infra;
 
@@ -44,5 +46,6 @@ public static class InjecaoDependencia
         });
 
        services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>(); 
+       services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>(); 
     }
 }
