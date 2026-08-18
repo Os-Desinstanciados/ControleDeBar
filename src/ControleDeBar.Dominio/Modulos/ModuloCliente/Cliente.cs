@@ -4,7 +4,7 @@ namespace ControleDeBar.Dominio.Modulos.ModuloCliente;
 
 public class Cliente : EntidadeBase<Cliente>
 {
-    public string Nome { get; set; }
+    public string Nome { get; set; } = string.Empty;
 
     public Cliente()
     {
