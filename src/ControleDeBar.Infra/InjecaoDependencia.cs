@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using ControleDeBar.Dominio.Modulos.ModuloMesa;
 using ControleDeBar.Infra.Modulos.ModuloMesa;
+using Microsoft.AspNetCore.Identity;
 
 namespace ControleDeBar.Infra;
 
@@ -46,8 +47,25 @@ public static class InjecaoDependencia
             });
         });
 
-       services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>(); 
-       services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>(); 
+        services.AddIdentityCore<IdentityUser<Guid>>(options => {
+            options.User.RequireUniqueEmail = true;
+            options.SignIn.RequireConfirmedEmail = false;
+            options.Password.RequiredLength = 8;
+            options.Password.RequireDigit = true;
+            options.Password.RequireNonAlphanumeric = true;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            options.Lockout.MaxFailedAccessAttempts = 5;
+            options.Lockout.AllowedForNewUsers = true;
+        })
+        .AddRoles<IdentityRole<Guid>>()
+        .AddEntityFrameworkStores<ControleDeBarDbContext>()
+        .AddSignInManager()
+        .AddDefaultTokenProviders();
+
+        services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>(); 
+        services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>(); 
         services.AddScoped<IRepositorioCliente, RepositorioClienteEmOrm>();
         services.AddScoped<IRepositorioProduto, RepositorioProdutoEmOrm>();
         
