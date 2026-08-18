@@ -1,3 +1,5 @@
+using ControleDeBar.Dominio.Modulos.ModuloGarcom;
+using ControleDeBar.Infra.Modulos.ModuloGarcom;
 using ControleDeBar.Dominio.Modulos.ModuloCliente;
 using ControleDeBar.Infra.Comartilhado.Logging;
 using ControleDeBar.Infra.Compartilhado.Orm;
@@ -6,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using ControleDeBar.Dominio.Modulos.ModuloMesa;
+using ControleDeBar.Infra.Modulos.ModuloMesa;
 
 namespace ControleDeBar.Infra;
 
@@ -42,6 +46,8 @@ public static class InjecaoDependencia
             });
         });
 
+       services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>(); 
+       services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>(); 
         services.AddScoped<IRepositorioCliente, RepositorioClienteEmOrm>();
         
     }

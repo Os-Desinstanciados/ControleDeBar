@@ -1,0 +1,33 @@
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Edição de Mesa";
+}
+
+@model EditarMesaViewModel;
+
+<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="Cadastrar" method="post">
+    <input asp-for="MesaId" type="hidden">
+    
+    <div class="mb-3">
+        <label asp-for="Numero" class="form-label fw-semibold text-primary text-uppercase small">Número</label>
+        <input asp-for="Numero" type="text" class="form-control">
+        <span asp-validation-for="Numero" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NumeroLugares" class="form-label fw-semibold text-primary text-uppercase small">Número de Lugares</label>
+        <input asp-for="NumeroLugares" type="text" class="form-control">
+        <span asp-validation-for="NumeroLugares" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StatusMesa" class="form-label fw-semibold text-primary text-uppercase small">Status da Mesa</label>
+        <input asp-for="StatusMesa" type="text" class="form-control">
+        <span asp-validation-for="StatusMesa" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
+        <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
+    </div>
+</form>
