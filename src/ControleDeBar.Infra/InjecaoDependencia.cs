@@ -43,6 +43,7 @@ public static class InjecaoDependencia
         });
 
         services.AddScoped<IRepositorioCliente, RepositorioClienteEmOrm>();
+        services.AddScoped<IRepositorioProduto, RepositorioProdutoEmOrm>();
         
     }
 }

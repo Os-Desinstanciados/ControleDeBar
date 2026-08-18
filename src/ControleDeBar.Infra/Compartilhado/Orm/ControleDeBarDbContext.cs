@@ -1,4 +1,5 @@
 using ControleDeBar.Dominio.Modulos.ModuloCliente;
+using ControleDeBar.Dominio.Modulos.ModuloProduto;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -9,6 +10,7 @@ public sealed class ControleDeBarDbContext(
     ) : DbContext(options)
 {
     public DbSet<Cliente> Clientes => Set<Cliente>();
+    public DbSet<Produto> Produtos => Set<Produto>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
