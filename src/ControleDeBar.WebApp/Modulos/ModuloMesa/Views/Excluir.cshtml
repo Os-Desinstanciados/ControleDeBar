@@ -5,8 +5,8 @@
 
 @model ExcluirMesaViewModel;
 
-<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="Excluir" asp-route-id="@Model.MesaId" method="post">
-    <input asp-for="MesaId" type="hidden">
+<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="Excluir" asp-route-id="@Model.Id" method="post">
+    <input asp-for="Id" type="hidden">
 
     <div class="alert alert-primary border-start border-primary border-4 rounded-3" role="alert">
         Deseja realmente excluir esta mesa?
@@ -14,7 +14,7 @@
 
     <dl class="row mb-0">
         <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">ID</dt>
-        <dd class="col-sm-8 text-break">@Model.MesaId</dd>
+        <dd class="col-sm-8 text-break">@Model.Id</dd>
 
         <dt class="col-sm-4 fw-semibold text-primary text-uppercase small">Número</dt>
         <dd class="col-sm-8">@Model.Numero</dd>

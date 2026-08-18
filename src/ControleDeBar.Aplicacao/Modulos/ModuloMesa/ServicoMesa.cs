@@ -34,7 +34,7 @@ public class ServicoMesa : ServicoBase<Mesa>
 
     public Result Editar(EditarMesaDto dto)
     {
-        if (ExisteMesaComMesmoNumero(dto.Numero, dto.MesaId))
+        if (ExisteMesaComMesmoNumero(dto.Numero, dto.Id))
             return Falha(nameof(dto.Numero), "Já existe uma mesa com este número.");
 
         Mesa mesaAtualizada = new Mesa(dto.Numero, dto.NumeroLugares);
@@ -47,7 +47,7 @@ public class ServicoMesa : ServicoBase<Mesa>
         if (resultadoValidacao.IsFailed)
             return resultadoValidacao;
 
-        bool conseguiuEditar = repositorioMesa.Editar(dto.MesaId, mesaAtualizada);
+        bool conseguiuEditar = repositorioMesa.Editar(dto.Id, mesaAtualizada);
 
         if (!conseguiuEditar)
             return Falha(string.Empty, "Mesa não encontrada.");
@@ -55,14 +55,14 @@ public class ServicoMesa : ServicoBase<Mesa>
         return Result.Ok();
     }
 
-    public Result Excluir(Guid mesaId)
+    public Result Excluir(Guid id)
     {
-        Mesa? mesa = repositorioMesa.SelecionarPorId(mesaId);
+        Mesa? mesa = repositorioMesa.SelecionarPorId(id);
 
         if (mesa == null)
             return Falha(string.Empty, "Mesa não encontrada.");
 
-        repositorioMesa.Excluir(mesaId);
+        repositorioMesa.Excluir(id);
 
         return Result.Ok();
     }
@@ -75,14 +75,14 @@ public class ServicoMesa : ServicoBase<Mesa>
                 m.Numero,
                 m.NumeroLugares,
                 m.StatusMesa,
-                m.MesaId
+                m.Id
             ))
             .ToList();
     }
 
-    public Result<DetalhesMesaDto> SelecionarPorId(Guid mesaId)
+    public Result<DetalhesMesaDto> SelecionarPorId(Guid id)
     {
-        Mesa? mesa = repositorioMesa.SelecionarPorId(mesaId);
+        Mesa? mesa = repositorioMesa.SelecionarPorId(id);
 
         if (mesa == null)
             return Result.Fail("Mesa não encontrada.");
@@ -91,7 +91,7 @@ public class ServicoMesa : ServicoBase<Mesa>
             mesa.Numero,
             mesa.NumeroLugares,
             mesa.StatusMesa,
-            mesa.MesaId
+            mesa.Id
         ));
     }
 

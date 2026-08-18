@@ -51,9 +51,9 @@ public class MesaController(ServicoMesa servicoMesa, IMapper mapeador) : Control
     }
 
     [HttpGet]
-    public ActionResult Editar(Guid mesaId)
+    public ActionResult Editar(Guid id)
     {
-        Result<DetalhesMesaDto> resultado = servicoMesa.SelecionarPorId(mesaId);
+        Result<DetalhesMesaDto> resultado = servicoMesa.SelecionarPorId(id);
 
         if (resultado.IsFailed)
         {
@@ -88,9 +88,9 @@ public class MesaController(ServicoMesa servicoMesa, IMapper mapeador) : Control
     }
 
     [HttpGet]
-    public ActionResult Excluir(Guid mesaId)
+    public ActionResult Excluir(Guid id)
     {
-        Result<DetalhesMesaDto> resultado = servicoMesa.SelecionarPorId(mesaId);
+        Result<DetalhesMesaDto> resultado = servicoMesa.SelecionarPorId(id);
 
         if (resultado.IsFailed)
         {
@@ -107,7 +107,7 @@ public class MesaController(ServicoMesa servicoMesa, IMapper mapeador) : Control
     [HttpPost]
     public ActionResult Excluir(ExcluirMesaViewModel excluirVm)
     {
-        Result resultado = servicoMesa.Excluir(excluirVm.MesaId);
+        Result resultado = servicoMesa.Excluir(excluirVm.Id);
 
         if (resultado.IsFailed)
             TempData.AddErrorMessage(resultado);

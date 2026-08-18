@@ -6,7 +6,7 @@ public record ListarMesasDto(
     string Numero,
     string NumeroLugares,
     StatusMesa StatusMesa,
-    Guid MesaId
+    Guid Id
 );
 
 public record CadastrarMesaDto(
@@ -19,12 +19,12 @@ public record EditarMesaDto(
     string Numero,
     string NumeroLugares,
     StatusMesa StatusMesa,
-    Guid MesaId
+    Guid Id
 );
 
 public record DetalhesMesaDto(
     string Numero,
     string NumeroLugares,
     StatusMesa StatusMesa,
-    Guid MesaId
+    Guid Id
 );
