@@ -7,7 +7,6 @@ public record ListarClientesViewModel(
     string Nome
 );
 
-
 public record CadastrarClienteViewModel(
     [Required(ErrorMessage = "O campo \"Nome\" deve ser preenchido.")]
     [StringLength(100, MinimumLength = 2, ErrorMessage = "O campo \"Nome\" deve conter entre 2 e 100 caracteres.")]
