@@ -40,20 +40,20 @@ public class ServicoCliente : ServicoBase<Cliente>
         Cliente clienteAtualizado = new Cliente(
             dto.Nome
         );
-        
+
         Result resultadoValidacao = ValidarEntidade(clienteAtualizado);
 
-        if(resultadoValidacao.IsFailed)
+        if (resultadoValidacao.IsFailed)
             return resultadoValidacao;
 
         bool conseguiuEditar = repositorioCliente.Editar(dto.Id, clienteAtualizado);
 
         if (!conseguiuEditar)
             return Falha(string.Empty, "Cliente não encontrado.");
-        
+
         return Result.Ok();
     }
-    
+
     public Result Excluir(Guid id)
     {
         Cliente? cliente = repositorioCliente.SelecionarPorId(id);
@@ -86,7 +86,20 @@ public class ServicoCliente : ServicoBase<Cliente>
     {
         return repositorioCliente
             .SelecionarTodos()
-            .Select(c => new ListarClientesDto(c.Nome))
+            .Select(c => new ListarClientesDto(c.Id, c.Nome))
             .ToList();
+    }
+
+    public Result<DetalhesClienteDto> SelecionarPorId(Guid id)
+    {
+        Cliente? contato = repositorioCliente.SelecionarPorId(id);
+
+        if (contato == null)
+            return Result.Fail("Contato não encontrado.");
+
+        return Result.Ok(new DetalhesClienteDto(
+            contato.Id,
+            contato.Nome
+        ));
     }
 }
