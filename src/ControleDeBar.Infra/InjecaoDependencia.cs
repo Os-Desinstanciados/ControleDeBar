@@ -46,8 +46,8 @@ public static class InjecaoDependencia
             });
         });
 
-       services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>(); 
-       services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>(); 
+        services.AddScoped<IRepositorioGarcom, RepositorioGarcomEmOrm>(); 
+        services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>(); 
         services.AddScoped<IRepositorioCliente, RepositorioClienteEmOrm>();
         services.AddScoped<IRepositorioProduto, RepositorioProdutoEmOrm>();
         
