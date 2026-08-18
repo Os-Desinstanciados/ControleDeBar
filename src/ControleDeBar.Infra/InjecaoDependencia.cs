@@ -1,3 +1,4 @@
+using ControleDeBar.Dominio.Modulos.ModuloCliente;
 using ControleDeBar.Infra.Comartilhado.Logging;
 using ControleDeBar.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,7 @@ public static class InjecaoDependencia
             });
         });
 
+        services.AddScoped<IRepositorioCliente, RepositorioClienteEmOrm>();
         
     }
 }

@@ -2,7 +2,6 @@ using ControleDeBar.Aplicacao.Compartilhado;
 using ControleDeBar.Dominio.Modulos.ModuloCliente;
 using FluentResults;
 
-
 namespace ControleDeBar.Aplicacao.Modulos.ModuloCliente;
 
 public class ServicoCliente : ServicoBase<Cliente>
