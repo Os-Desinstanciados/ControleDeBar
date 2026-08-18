@@ -1,3 +1,4 @@
+using ControleDeBar.Dominio.Modulos.ModuloGarcom;
 using ControleDeBar.Dominio.Modulos.ModuloCliente;
 using ControleDeBar.Dominio.Modulos.ModuloProduto;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ public sealed class ControleDeBarDbContext(
     DbContextOptions<ControleDeBarDbContext> options
     ) : DbContext(options)
 {
+    public DbSet<Garcom> Garcons => Set<Garcom>();
     public DbSet<Cliente> Clientes => Set<Cliente>();
     public DbSet<Produto> Produtos => Set<Produto>();
     
