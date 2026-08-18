@@ -1,4 +1,5 @@
 using ControleDeBar.Aplicacao.Modulos.ModuloCliente;
+using ControleDeBar.Aplicacao.Modulos.ModuloProduto;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,5 +13,6 @@ public static class InjecaoDependencia
     )
     {          
         services.AddScoped<ServicoCliente>();
+        services.AddScoped<ServicoProduto>();
     }
 }
