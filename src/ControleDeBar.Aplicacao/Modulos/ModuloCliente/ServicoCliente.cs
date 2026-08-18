@@ -34,7 +34,7 @@ public class ServicoCliente : ServicoBase<Cliente>
 
     public Result Editar(EditarClienteDto dto)
     {
-        if (ExisteClienteComMesmoNome(dto.Nome))
+        if (ExisteClienteComMesmoNome(dto.Nome, dto.Id))
             return Falha(nameof(dto.Nome), "Já existe um cliente com este nome.");
 
         Cliente clienteAtualizado = new Cliente(
