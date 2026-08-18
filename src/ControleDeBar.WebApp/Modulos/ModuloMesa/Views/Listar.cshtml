@@ -30,27 +30,27 @@ else
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
                             <h5 class="card-title mb-0">@m.Numero</h5>
-                            <span class="badge text-bg-primary rounded-pill">@m.MesaId.ToString().Substring(0, 8)</span>
+                            <span class="badge text-bg-primary rounded-pill">@m.Id.ToString().Substring(0, 8)</span>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
                             <h5 class="card-title mb-0">@m.NumeroLugares</h5>
-                            <span class="badge text-bg-primary rounded-pill">@m.MesaId.ToString().Substring(0, 8)</span>
+                            <span class="badge text-bg-primary rounded-pill">@m.Id.ToString().Substring(0, 8)</span>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
                             <h5 class="card-title mb-0">@m.StatusMesa</h5>
-                            <span class="badge text-bg-primary rounded-pill">@m.MesaId.ToString().Substring(0, 8)</span>
+                            <span class="badge text-bg-primary rounded-pill">@m.Id.ToString().Substring(0, 8)</span>
                         </div>
 
                         <dl class="row g-2 mb-4">
                             <dt class="col-5 text-secondary fw-semibold">ID</dt>
-                            <dd class="col-7 mb-0 text-break">@m.MesaId</dd>
+                            <dd class="col-7 mb-0 text-break">@m.Id</dd>
                         </dl>
 
                         <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
-                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Editar" asp-route-id="@m.MesaId">Editar</a>
-                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Excluir" asp-route-id="@m.MesaId">Excluir</a>
+                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Editar" asp-route-id="@m.Id">Editar</a>
+                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Excluir" asp-route-id="@m.Id">Excluir</a>
                         </div>
                     </div>
                 </div>

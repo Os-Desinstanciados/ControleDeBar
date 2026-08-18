@@ -7,7 +7,7 @@ public record ListarMesasViewModel(
     string Numero,
     string NumeroLugares,
     StatusMesa StatusMesa,
-    Guid MesaId
+    Guid Id
 );
 
 public record CadastrarMesaViewModel(
@@ -26,7 +26,7 @@ public record CadastrarMesaViewModel(
 
 public record EditarMesaViewModel(
 
-    Guid MesaId,
+    Guid Id,
    
     [Required(ErrorMessage = "O campo \"Número\" deve ser preenchido.")]
     [StringLength(3, ErrorMessage = "O campo \"Número\" deve conter até 3 caracteres.")]
@@ -46,5 +46,5 @@ public record ExcluirMesaViewModel(
     string Numero,
     string NumeroLugares,
     StatusMesa StatusMesa,
-    Guid MesaId
+    Guid Id
 );
