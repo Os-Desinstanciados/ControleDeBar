@@ -6,8 +6,7 @@ public class Mesa : EntidadeBase<Mesa>
 {
     public string Numero { get; set; } = string.Empty; 
     public string NumeroLugares { get; set; } = string.Empty;
-    public StatusMesa StatusMesa { get; set; } 
-    public Guid Id { get; set; }
+    public StatusMesa StatusMesa { get; set; }
 
     public Mesa()
     {

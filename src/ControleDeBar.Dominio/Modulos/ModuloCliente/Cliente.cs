@@ -34,6 +34,5 @@ public class Cliente : EntidadeBase<Cliente>
             erros.Add("O campo \"Nome\" deve conter entre 2 e 100 caracteres.");
 
         return erros;
-        
     }
 }
