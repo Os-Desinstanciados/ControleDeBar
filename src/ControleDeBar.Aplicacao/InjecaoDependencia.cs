@@ -4,6 +4,7 @@ using ControleDeBar.Aplicacao.Modulos.ModuloCliente;
 using ControleDeBar.Aplicacao.Modulos.ModuloProduto;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ControleDeBar.Aplicacao.Modulos.ModuloConta;
 
 namespace ControleDeBar.Aplicacao;
 
@@ -18,5 +19,6 @@ public static class InjecaoDependencia
         services.AddScoped<ServicoMesa>();
         services.AddScoped<ServicoCliente>();
         services.AddScoped<ServicoProduto>();
+        services.AddScoped<ServicoConta>();
     }
 }

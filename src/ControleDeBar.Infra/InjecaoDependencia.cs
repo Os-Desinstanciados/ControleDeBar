@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using ControleDeBar.Dominio.Modulos.ModuloMesa;
 using ControleDeBar.Infra.Modulos.ModuloMesa;
+using ControleDeBar.Dominio.Modulos.ModuloConta;
+using ControleDeBar.Infra.Modulos.ModuloConta;
 
 namespace ControleDeBar.Infra;
 
@@ -50,6 +52,7 @@ public static class InjecaoDependencia
         services.AddScoped<IRepositorioMesa, RepositorioMesaEmOrm>(); 
         services.AddScoped<IRepositorioCliente, RepositorioClienteEmOrm>();
         services.AddScoped<IRepositorioProduto, RepositorioProdutoEmOrm>();
+        services.AddScoped<IRepositorioConta, RepositorioContaEmOrm>();
         
     }
 }
