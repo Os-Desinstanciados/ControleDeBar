@@ -31,6 +31,8 @@ public class Conta : EntidadeBase<Conta>
     {
         Mesa = entidadeAtualizada.Mesa;
         Garcom = entidadeAtualizada.Garcom;
+        Status = entidadeAtualizada.Status;
+        DataFechamento = entidadeAtualizada.DataFechamento;
     }
 
     public override List<string> Validar()
