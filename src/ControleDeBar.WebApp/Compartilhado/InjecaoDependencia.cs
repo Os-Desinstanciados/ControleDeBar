@@ -1,3 +1,5 @@
+using ControleDeBar.Dominio.Compartilhado.Identity;
+using ControleDeBar.WebApp.Compartilhado.Identity;
 using ControleDeBar.WebApp.Compartilhado.Mapping;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -40,6 +42,10 @@ public static class InjecaoDependencia
                 .RequireAuthenticatedUser()
                 .Build();
         });
+
+        services.AddHttpContextAccessor();
+
+        services.AddScoped<IUserProvider, UserProvider>();
 
         services.AddAutoMapper(mapperConfig =>
         {
