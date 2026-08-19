@@ -1,9 +1,9 @@
-using EscolaDeCursos.Dominio.Modulos.ModuloInstituicao;
+using ControleDeBar.Dominio.Modulos.ModuloInstituicao;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EscolaDeCursos.Infra.Modulos.ModuloInstituicao;
+namespace ControleDeBar.Infra.Modulos.ModuloInstituicao;
 
 public sealed class InstituicaoConfiguration : IEntityTypeConfiguration<Instituicao>
 {

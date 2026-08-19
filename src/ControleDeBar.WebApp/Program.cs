@@ -14,6 +14,12 @@ var app = builder.Build();
 
 // Middlewares de roteamento
 app.UseRouting();
+
+// Middlewares de Auth
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Middleware de reconhecimento de rotas de controllers
 app.MapDefaultControllerRoute();
 
 // Execução do Servidor

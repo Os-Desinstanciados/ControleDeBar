@@ -4,7 +4,7 @@ using ControleDeBar.Dominio.Modulos.ModuloProduto;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using ControleDeBar.Dominio.Modulos.ModuloMesa;
-using EscolaDeCursos.Dominio.Modulos.ModuloInstituicao;
+using ControleDeBar.Dominio.Modulos.ModuloInstituicao;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 

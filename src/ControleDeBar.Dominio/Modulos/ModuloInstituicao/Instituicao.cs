@@ -1,4 +1,4 @@
-namespace EscolaDeCursos.Dominio.Modulos.ModuloInstituicao;
+namespace ControleDeBar.Dominio.Modulos.ModuloInstituicao;
 
 public sealed class Instituicao
 {

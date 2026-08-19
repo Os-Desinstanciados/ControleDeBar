@@ -100,7 +100,7 @@ namespace ControleDeBar.Infra.Migrations
                     b.ToTable("Produtos");
                 });
 
-            modelBuilder.Entity("EscolaDeCursos.Dominio.Modulos.ModuloInstituicao.Instituicao", b =>
+            modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloInstituicao.Instituicao", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -313,11 +313,11 @@ namespace ControleDeBar.Infra.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("EscolaDeCursos.Dominio.Modulos.ModuloInstituicao.Instituicao", b =>
+            modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloInstituicao.Instituicao", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<System.Guid>", null)
                         .WithOne()
-                        .HasForeignKey("EscolaDeCursos.Dominio.Modulos.ModuloInstituicao.Instituicao", "UserId")
+                        .HasForeignKey("ControleDeBar.Dominio.Modulos.ModuloInstituicao.Instituicao", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_TBInstituicao_AspNetUsers");
