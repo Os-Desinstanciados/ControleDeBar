@@ -68,6 +68,24 @@ public class ServicoConta : ServicoBase<Conta>
         );
     }
 
+    public Result Excluir(Guid id)
+    {
+        Conta? conta = repositorioConta.SelecionarPorId(id);
+
+        if (conta == null)
+            return Falha(string.Empty, "Conta não encontrada.");
+
+        if (conta.Status == StatusConta.Aberta)
+            return Falha(string.Empty, "Uma conta aberta não pode ser excluída.");
+
+        bool conseguiuExcluir = repositorioConta.Excluir(id);
+
+        if (!conseguiuExcluir)
+            return Falha(string.Empty, "Não foi possível excluir a conta.");
+
+        return Result.Ok();
+    }
+
     public Result Fechar(Guid id)
     {
         Conta? conta = repositorioConta.SelecionarPorId(id);

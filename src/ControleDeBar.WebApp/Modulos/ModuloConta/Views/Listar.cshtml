@@ -1,0 +1,96 @@
+@using ControleDeBar.Dominio.Modulos.ModuloConta
+@model List<ListarContasViewModel>
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Contas";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-1">Contas</h1>
+        <p class="text-secondary mb-0">
+            Gerencie as contas abertas e consulte o histórico.
+        </p>
+    </div>
+
+    <a class="btn btn-primary" asp-action="Cadastrar">
+        Abrir Conta
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-primary border-start border-primary border-4 rounded-3">
+        Nenhuma conta cadastrada.
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+        @foreach (ListarContasViewModel conta in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title mb-0">
+                                Mesa @conta.Mesa.Numero
+                            </h5>
+
+                            @if (conta.Status == StatusConta.Aberta)
+                            {
+                                <span class="badge text-bg-success">
+                                    Aberta
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge text-bg-secondary">
+                                    Fechada
+                                </span>
+                            }
+                        </div>
+
+                        <p class="card-text mb-2">
+                            <strong>Garçom:</strong>
+                            @conta.Garcom.Nome
+                        </p>
+
+                        <p class="card-text mb-2">
+                            <strong>Abertura:</strong>
+                            @conta.DataAbertura.ToString("dd/MM/yyyy HH:mm")
+                        </p>
+
+                        @if (conta.DataFechamento.HasValue)
+                        {
+                            <p class="card-text mb-2">
+                                <strong>Fechamento:</strong>
+                                @conta.DataFechamento.Value.ToString("dd/MM/yyyy HH:mm")
+                            </p>
+                        }
+
+                    </div>
+
+                    <div class="card-footer bg-transparent border-0 pb-3 align-items-start">
+
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-outline-primary" asp-action="Detalhes" asp-route-id="@conta.Id">Detalhes</a>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-outline-primary" asp-action="Detalhes" asp-route-id="@conta.Id">Adicionar Pedidos</a>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </div>
+}
