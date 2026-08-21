@@ -34,6 +34,26 @@ public sealed class GarcomTestes
     }
 
     [TestMethod]
+    public void Validar_Nome_ComTamanhoLimiteMinimo()
+    {
+        Garcom garcom = new Garcom(new string('A', 2));
+
+        List<string> erros = garcom.Validar();
+
+        Assert.HasCount(0, erros);
+    }
+
+    [TestMethod]
+    public void Validar_Nome_ComTamanhoLimiteMaximo()
+    {
+        Garcom garcom = new Garcom(new string('A', 50));
+
+        List<string> erros = garcom.Validar();
+
+        Assert.HasCount(0, erros);
+    }
+
+    [TestMethod]
     public void Validar_ComNomeLongo_DeveRetornarErro()
     {
         Garcom garcom = new Garcom(new string ('A', 51));
