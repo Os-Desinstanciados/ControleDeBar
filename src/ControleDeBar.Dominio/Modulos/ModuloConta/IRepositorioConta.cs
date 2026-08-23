@@ -2,4 +2,7 @@ using ControleDeBar.Dominio.Compartilhado;
 
 namespace ControleDeBar.Dominio.Modulos.ModuloConta;
 
-public interface IRepositorioConta : IRepositorio<Conta>;
+public interface IRepositorioConta : IRepositorio<Conta>
+{
+    Conta? SelecionarRegistroPorId(Guid contaId);
+}
