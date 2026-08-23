@@ -1,109 +1,45 @@
-@using ControleDeBar.Dominio.Modulos.ModuloConta
-@model DetalhesContaViewModel
+@if (Model.Status == StatusConta.Aberta)
+{
+    <hr />
 
-@{
-    Layout = "_Layout";
-    ViewBag.Titulo = "Detalhes da Conta";
-}
+    <h4>Adicionar Pedido</h4>
 
-<div class="row justify-content-center">
-    <div class="col-lg-8">
+    <form asp-controller="Pedido" asp-action="Adicionar" method="post">
+        
+        <input type="hidden" name="contaId" value="@Model.Id" />
 
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Produto</label>
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <select name="ProdutoId" class="form-select">
+                    <option value="">Selecione um produto</option>
 
-                    <h2 class="mb-0">
-                        Conta - Mesa @Model.Mesa.Numero
-                    </h2>
-
-                    @if (Model.Status == StatusConta.Aberta)
+                    @foreach (var produto in Model.Produtos!)
                     {
-                        <span class="badge text-bg-success">
-                            Aberta
-                        </span>
+                        <option value="@produto.Id">
+                            @produto.Nome - @produto.Preco.ToString("C2")
+                        </option>
                     }
-                    else
-                    {
-                        <span class="badge text-bg-secondary">
-                            Fechada
-                        </span>
-                    }
+                </select>
+            </div>
 
-                </div>
+            <div class="col-md-3">
+                <label class="form-label">Quantidade</label>
 
-                <hr />
+                <input
+                    type="number"
+                    name="Quantidade"
+                    class="form-control"
+                    min="1"
+                    value="1" />
+            </div>
 
-                <div class="row g-3 mt-1">
-
-                    <div class="col-md-6">
-                        <strong>Mesa</strong>
-                        <p class="text-secondary">
-                            @Model.Mesa.Numero
-                        </p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <strong>Garçom</strong>
-                        <p class="text-secondary">
-                            @Model.Garcom.Nome
-                        </p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <strong>Data de Abertura</strong>
-                        <p class="text-secondary">
-                            @Model.DataAbertura.ToString("dd/MM/yyyy HH:mm")
-                        </p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <strong>Data de Fechamento</strong>
-
-                        @if (Model.DataFechamento.HasValue)
-                        {
-                            <p class="text-secondary">
-                                @Model.DataFechamento.Value.ToString("dd/MM/yyyy HH:mm")
-                            </p>
-                        }
-                        else
-                        {
-                            <p class="text-secondary">
-                                -
-                            </p>
-                        }
-                    </div>
-
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-4">
-
-                    <a class="btn btn-outline-secondary" asp-action="Listar">
-                        Voltar
-                    </a>
-
-                    @if (Model.Status == StatusConta.Aberta)
-                    {
-                        <form asp-action="Fechar" asp-route-id="@Model.Id" method="post">
-
-                            <button type="submit" class="btn btn-outline-danger">
-                                Fechar Conta
-                            </button>
-
-                        </form>
-                    }
-                    else
-                    {
-                        <a class="btn btn-outline-danger" asp-action="Excluir" asp-route-id="@Model.Id">
-                            Excluir
-                        </a>
-                    }
-
-                </div>
-
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">
+                    Adicionar
+                </button>
             </div>
         </div>
-
-    </div>
-</div>
+    </form>
+}

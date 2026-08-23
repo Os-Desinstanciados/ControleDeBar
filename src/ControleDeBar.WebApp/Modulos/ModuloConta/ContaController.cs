@@ -2,6 +2,7 @@ using AutoMapper;
 using ControleDeBar.Aplicacao.Modulos.ModuloConta;
 using ControleDeBar.Aplicacao.Modulos.ModuloGarcom;
 using ControleDeBar.Aplicacao.Modulos.ModuloMesa;
+using ControleDeBar.Aplicacao.Modulos.ModuloProduto;
 using ControleDeBar.Dominio.Modulos.ModuloMesa;
 using ControleDeBar.WebApp.Compartilhado.Extensions;
 using FluentResults;
@@ -13,6 +14,7 @@ public class ContaController(
     ServicoConta servicoConta,
     ServicoMesa servicoMesa,
     ServicoGarcom servicoGarcom,
+    ServicoProduto servicoProduto,
     IMapper mapeador
 ) : Controller
 {
@@ -155,8 +157,13 @@ public class ContaController(
             return RedirectToAction(nameof(Listar));
         }
 
-        DetalhesContaViewModel detalhesVm =
+        DetalhesContaViewModel detalhesVm = 
             mapeador.Map<DetalhesContaViewModel>(resultado.Value);
+        
+        detalhesVm = detalhesVm with
+        {
+            Produtos = servicoProduto.SelecionarTodos()
+        };
 
         return View(detalhesVm);
     }

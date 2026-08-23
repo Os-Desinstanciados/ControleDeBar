@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using ControleDeBar.Aplicacao.Modulos.ModuloGarcom;
 using ControleDeBar.Aplicacao.Modulos.ModuloMesa;
+using ControleDeBar.Aplicacao.Modulos.ModuloProduto;
 using ControleDeBar.Dominio.Modulos.ModuloConta;
 using ControleDeBar.Dominio.Modulos.ModuloGarcom;
 using ControleDeBar.Dominio.Modulos.ModuloMesa;
@@ -35,5 +36,6 @@ public record DetalhesContaViewModel(
     DateTime DataAbertura,
     DateTime? DataFechamento,
     StatusConta Status,
-    List<Pedido> Pedidos
+    List<Pedido> Pedidos,
+    List<ListarProdutosDto>? Produtos = null
 );
