@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using ControleDeBar.Dominio.Modulos.ModuloMesa;
 using ControleDeBar.Dominio.Modulos.ModuloConta;
+using ControleDeBar.Dominio.Modulos.ModuloPedido;
 
 namespace ControleDeBar.Infra.Compartilhado.Orm;
 
@@ -17,6 +18,7 @@ public sealed class ControleDeBarDbContext(
     public DbSet<Produto> Produtos => Set<Produto>();
     public DbSet<Mesa> Mesas => Set<Mesa>();
     public DbSet<Conta> Contas => Set<Conta>();
+    public DbSet<Pedido> Pedidos => Set<Pedido>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
