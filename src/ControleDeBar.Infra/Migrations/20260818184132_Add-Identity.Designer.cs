@@ -4,6 +4,7 @@ using ControleDeBar.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleDeBar.Infra.Migrations
 {
     [DbContext(typeof(ControleDeBarDbContext))]
-    partial class ControleDeBarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260818184132_Add-Identity")]
+    partial class AddIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,109 +45,41 @@ namespace ControleDeBar.Infra.Migrations
                     b.ToTable("TBCliente", (string)null);
                 });
 
-            modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloConta.Conta", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DataAbertura")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DataFechamento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("GarcomId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MesaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id")
-                        .HasName("PK_TBConta");
-
-                    b.HasIndex("GarcomId");
-
-                    b.HasIndex("MesaId");
-
-                    b.ToTable("TBConta", (string)null);
-                });
-
             modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloGarcom.Garcom", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id")
-                        .HasName("PK_TBGarcom");
-
-                    b.HasIndex("Nome")
-                        .IsUnique()
-                        .HasDatabaseName("UQ_TBGarcom_Nome");
-
-                    b.ToTable("TBGarcom", (string)null);
-                });
-
-            modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloMesa.Mesa", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Numero")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<string>("NumeroLugares")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)");
-
-                    b.Property<int>("StatusMesa")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id")
-                        .HasName("PK_TBMesa");
-
-                    b.HasIndex("Numero")
-                        .IsUnique()
-                        .HasDatabaseName("UQ_TBMesa_Numero");
-
-                    b.ToTable("TBMesa", (string)null);
-                });
-
-            modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloPedido.Pedido", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ContaId")
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Garcons");
+                });
+
+            modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloMesa.Mesa", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DataHora")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProdutoId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("NumeroLugares")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Quantidade")
+                    b.Property<int>("StatusMesa")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContaId");
-
-                    b.HasIndex("ProdutoId");
-
-                    b.ToTable("Pedidos");
+                    b.ToTable("Mesas");
                 });
 
             modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloProduto.Produto", b =>
