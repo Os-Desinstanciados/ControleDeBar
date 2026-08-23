@@ -4,6 +4,7 @@ using ControleDeBar.Aplicacao.Modulos.ModuloMesa;
 using ControleDeBar.Dominio.Modulos.ModuloConta;
 using ControleDeBar.Dominio.Modulos.ModuloGarcom;
 using ControleDeBar.Dominio.Modulos.ModuloMesa;
+using ControleDeBar.Dominio.Modulos.ModuloPedido;
 
 namespace ControleDeBar.WebApp.Modulos.ModuloConta;
 
@@ -33,5 +34,6 @@ public record DetalhesContaViewModel(
     Garcom Garcom,
     DateTime DataAbertura,
     DateTime? DataFechamento,
-    StatusConta Status
+    StatusConta Status,
+    List<Pedido> Pedidos
 );

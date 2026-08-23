@@ -1,6 +1,7 @@
 using ControleDeBar.Dominio.Modulos.ModuloConta;
 using ControleDeBar.Dominio.Modulos.ModuloGarcom;
 using ControleDeBar.Dominio.Modulos.ModuloMesa;
+using ControleDeBar.Dominio.Modulos.ModuloPedido;
 
 public record ListarContasDto(
     Guid Id,
@@ -22,5 +23,6 @@ public record DetalhesContaDto(
     Garcom Garcom,
     DateTime DataAbertura,
     DateTime? DataFechamento,
-    StatusConta Status
+    StatusConta Status,
+    List<Pedido> Pedidos
 );

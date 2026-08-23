@@ -28,7 +28,7 @@ public class Pedido : EntidadeBase<Pedido>
         ProdutoId = produto.Id;
         Conta = conta;
         ContaId = conta.Id;
-
+        DataHora = DateTime.Now;
     }
 
     public decimal CalcularSubtotal()

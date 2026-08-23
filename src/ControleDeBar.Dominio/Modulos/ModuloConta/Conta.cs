@@ -1,6 +1,7 @@
 using ControleDeBar.Dominio.Compartilhado;
 using ControleDeBar.Dominio.Modulos.ModuloGarcom;
 using ControleDeBar.Dominio.Modulos.ModuloMesa;
+using ControleDeBar.Dominio.Modulos.ModuloPedido;
 
 namespace ControleDeBar.Dominio.Modulos.ModuloConta;
 
@@ -11,6 +12,7 @@ public class Conta : EntidadeBase<Conta>
     public DateTime DataAbertura { get; set; }
     public DateTime? DataFechamento { get; set; }
     public StatusConta Status { get; set; }
+    public List<Pedido> Pedidos { get; set; } = [];
 
     public Conta()
     {

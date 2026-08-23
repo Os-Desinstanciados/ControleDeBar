@@ -22,4 +22,9 @@ public sealed class RepositorioContaEmOrm(ControleDeBarDbContext dbContext) :
             .Include(c => c.Garcom)
             .SingleOrDefault(c => c.Id == idSelecionado);
     }
+
+    public Conta? SelecionarRegistroPorId(Guid contaId)
+    {
+        throw new NotImplementedException();
+    }
 }

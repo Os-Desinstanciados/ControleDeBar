@@ -23,7 +23,7 @@ public class ServicoPedido
 
     public void Adicionar(Guid contaId, PedidoDto pedidoDto)
     {
-        Conta? conta = repositorioConta.SelecionarRegistroPorId(contaId);
+        Conta? conta = repositorioConta.SelecionarPorId(contaId);
 
         Produto? produto = repositorioProduto.SelecionarPorId(
             pedidoDto.ProdutoId

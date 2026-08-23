@@ -140,7 +140,8 @@ public class ServicoConta : ServicoBase<Conta>
             conta.Garcom,
             conta.DataAbertura,
             conta.DataFechamento,
-            conta.Status
+            conta.Status,
+            conta.Pedidos
             )
         );
     }
