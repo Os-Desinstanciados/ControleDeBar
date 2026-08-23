@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace ControleDeBar.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class AtualizacaoModel : Migration
+    public partial class AtualizarModeloAposMerge : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
