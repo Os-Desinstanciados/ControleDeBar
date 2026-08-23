@@ -45,7 +45,7 @@ public class Mesa : EntidadeBase<Mesa>
             erros.Add("O campo \"Número de Lugares\" não deve ser igual a zero.");
 
         else if (!NumeroLugares.All(char.IsDigit))
-            erros.Add("O campo \"Número\" deve conter apenas números.");
+            erros.Add("O campo \"Número de Lugares\" deve conter apenas números.");
 
         return erros;
     }

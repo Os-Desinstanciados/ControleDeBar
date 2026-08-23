@@ -4,5 +4,8 @@
     <Project Path="src/ControleDeBar.Dominio/ControleDeBar.Dominio.csproj" />    
     <Project Path="src/ControleDeBar.Aplicacao/ControleDeBar.Aplicacao.csproj" />    
     <Project Path="src/ControleDeBar.Infra/ControleDeBar.Infra.csproj" />    
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ControleDeBar.Testes.Unidade/ControleDeBar.Testes.Unidade.csproj" />
   </Folder>  
 </Solution>

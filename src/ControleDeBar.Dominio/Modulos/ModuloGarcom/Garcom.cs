@@ -23,7 +23,7 @@ public class Garcom : EntidadeBase<Garcom>
             erros.Add("O campo \"Nome\" deve ser preenchido.");
 
         else if (Nome.Length < 2 || Nome.Length > 50)
-            erros.Add("O campo \"Nome\" deve conter entre 2 e 50.");
+            erros.Add("O campo \"Nome\" deve conter entre 2 e 50 caracteres.");
 
         return erros;
     }

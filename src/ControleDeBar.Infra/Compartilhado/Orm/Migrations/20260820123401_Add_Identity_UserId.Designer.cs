@@ -4,16 +4,19 @@ using ControleDeBar.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ControleDeBar.Infra.Migrations
+namespace ControleDeBar.Infra.Compartilhado.Orm.Migrations
 {
     [DbContext(typeof(ControleDeBarDbContext))]
-    partial class ControleDeBarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260820123401_Add_Identity_UserId")]
+    partial class Add_Identity_UserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,54 +48,22 @@ namespace ControleDeBar.Infra.Migrations
                     b.ToTable("TBCliente", (string)null);
                 });
 
-            modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloConta.Conta", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DataAbertura")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DataFechamento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("GarcomId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MesaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id")
-                        .HasName("PK_TBConta");
-
-                    b.HasIndex("GarcomId");
-
-                    b.HasIndex("MesaId");
-
-                    b.ToTable("TBConta", (string)null);
-                });
-
             modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloGarcom.Garcom", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id")
-                        .HasName("PK_TBGarcom");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("Nome")
-                        .IsUnique()
-                        .HasDatabaseName("UQ_TBGarcom_Nome");
+                    b.HasKey("Id");
 
-                    b.ToTable("TBGarcom", (string)null);
+                    b.ToTable("Garcons");
                 });
 
             modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloInstituicao.Instituicao", b =>
@@ -114,79 +85,47 @@ namespace ControleDeBar.Infra.Migrations
             modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloMesa.Mesa", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Numero")
                         .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumeroLugares")
                         .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusMesa")
                         .HasColumnType("int");
 
-                    b.HasKey("Id")
-                        .HasName("PK_TBMesa");
-
-                    b.HasIndex("Numero")
-                        .IsUnique()
-                        .HasDatabaseName("UQ_TBMesa_Numero");
-
-                    b.ToTable("TBMesa", (string)null);
-                });
-
-            modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloPedido.Pedido", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ContaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DataHora")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProdutoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContaId");
-
-                    b.HasIndex("ProdutoId");
-
-                    b.ToTable("Pedidos");
+                    b.ToTable("Mesas");
                 });
 
             modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloProduto.Produto", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Preco")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id")
-                        .HasName("PK_TBProduto");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("Nome")
-                        .IsUnique()
-                        .HasDatabaseName("UQ_TBProduto_Nome");
+                    b.HasKey("Id");
 
-                    b.ToTable("TBProduto", (string)null);
+                    b.ToTable("Produtos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -386,25 +325,6 @@ namespace ControleDeBar.Infra.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloConta.Conta", b =>
-                {
-                    b.HasOne("ControleDeBar.Dominio.Modulos.ModuloGarcom.Garcom", "Garcom")
-                        .WithMany()
-                        .HasForeignKey("GarcomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ControleDeBar.Dominio.Modulos.ModuloMesa.Mesa", "Mesa")
-                        .WithMany()
-                        .HasForeignKey("MesaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Garcom");
-
-                    b.Navigation("Mesa");
-                });
-
             modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloInstituicao.Instituicao", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<System.Guid>", null)
@@ -413,25 +333,6 @@ namespace ControleDeBar.Infra.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_TBInstituicao_AspNetUsers");
-                });
-
-            modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloPedido.Pedido", b =>
-                {
-                    b.HasOne("ControleDeBar.Dominio.Modulos.ModuloConta.Conta", "Conta")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("ContaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ControleDeBar.Dominio.Modulos.ModuloProduto.Produto", "Produto")
-                        .WithMany()
-                        .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Conta");
-
-                    b.Navigation("Produto");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -483,11 +384,6 @@ namespace ControleDeBar.Infra.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ControleDeBar.Dominio.Modulos.ModuloConta.Conta", b =>
-                {
-                    b.Navigation("Pedidos");
                 });
 #pragma warning restore 612, 618
         }
