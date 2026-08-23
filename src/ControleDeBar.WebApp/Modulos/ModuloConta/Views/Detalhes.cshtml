@@ -1,45 +1,209 @@
-@if (Model.Status == StatusConta.Aberta)
-{
-    <hr />
+@using ControleDeBar.Dominio.Modulos.ModuloConta
 
-    <h4>Adicionar Pedido</h4>
+@model DetalhesContaViewModel
 
-    <form asp-controller="Pedido" asp-action="Adicionar" method="post">
-        
-        <input type="hidden" name="contaId" value="@Model.Id" />
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Detalhes da Conta";
+}
 
-        <div class="row">
-            <div class="col-md-6">
-                <label class="form-label">Produto</label>
+<div class="row justify-content-center">
+    <div class="col-lg-8">
 
-                <select name="ProdutoId" class="form-select">
-                    <option value="">Selecione um produto</option>
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
 
-                    @foreach (var produto in Model.Produtos!)
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="mb-0">Detalhes da Conta</h2>
+
+                    @if (Model.Status == StatusConta.Aberta)
                     {
-                        <option value="@produto.Id">
-                            @produto.Nome - @produto.Preco.ToString("C2")
-                        </option>
+                        <span class="badge text-bg-success">Aberta</span>
                     }
-                </select>
-            </div>
+                    else
+                    {
+                        <span class="badge text-bg-secondary">Fechada</span>
+                    }
+                </div>
 
-            <div class="col-md-3">
-                <label class="form-label">Quantidade</label>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <strong>Mesa:</strong>
+                        <p>@Model.Mesa.Numero</p>
+                    </div>
 
-                <input
-                    type="number"
-                    name="Quantidade"
-                    class="form-control"
-                    min="1"
-                    value="1" />
-            </div>
+                    <div class="col-md-6">
+                        <strong>Garçom:</strong>
+                        <p>@Model.Garcom.Nome</p>
+                    </div>
 
-            <div class="col-md-3 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary">
-                    Adicionar
-                </button>
+                    <div class="col-md-6">
+                        <strong>Abertura:</strong>
+                        <p>@Model.DataAbertura.ToString("dd/MM/yyyy HH:mm")</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <strong>Fechamento:</strong>
+                        <p>
+                            @(Model.DataFechamento?.ToString("dd/MM/yyyy HH:mm") ?? "-")
+                        </p>
+                    </div>
+                </div>
+
+                <hr />
+
+                <h4 class="mb-3">Comanda</h4>
+
+                @if (Model.Pedidos.Any())
+                {
+                    var pedidosAgrupados = Model.Pedidos
+                        .GroupBy(p => p.ProdutoId);
+
+                    @foreach (var grupo in pedidosAgrupados)
+                    {
+                        var primeiroPedido = grupo.First();
+
+                        var quantidadeTotal = grupo
+                            .Sum(p => p.Quantidade);
+
+                        var subtotal = grupo
+                            .Sum(p => p.CalcularSubtotal());
+
+                        <div class="d-flex justify-content-between align-items-center border-bottom py-3">
+
+                            <div>
+                                <strong>
+                                    @primeiroPedido.Produto.Nome
+                                </strong>
+
+                                <div class="text-muted">
+                                    @quantidadeTotal x
+                                    @primeiroPedido.Produto.Preco.ToString("C2")
+                                </div>
+                            </div>
+
+                            <strong>
+                                @subtotal.ToString("C2")
+                            </strong>
+
+                        </div>
+                    }
+
+                    var totalConta = Model.Pedidos
+                        .Sum(p => p.CalcularSubtotal());
+
+                    <div class="d-flex justify-content-end mt-3">
+                        <h4>
+                            Total: @totalConta.ToString("C2")
+                        </h4>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-light border">
+                        Nenhum pedido adicionado à conta.
+                    </div>
+                }
+
+                @if (Model.Status == StatusConta.Aberta)
+                {
+                    <hr class="my-4" />
+
+                    <h4 class="mb-3">Adicionar Pedido</h4>
+
+                    <form asp-controller="Pedido"
+                          asp-action="Adicionar"
+                          method="post">
+
+                        <input type="hidden"
+                               name="contaId"
+                               value="@Model.Id" />
+
+                        <div class="row align-items-end">
+
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Produto
+                                </label>
+
+                                <select name="ProdutoId"
+                                        class="form-select"
+                                        required>
+
+                                    <option value="">
+                                        Selecione um produto
+                                    </option>
+
+                                    @foreach (var produto in Model.Produtos!)
+                                    {
+                                        <option value="@produto.Id">
+                                            @produto.Nome - @produto.Preco.ToString("C2")
+                                        </option>
+                                    }
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">
+                                    Quantidade
+                                </label>
+
+                                <input type="number"
+                                       name="Quantidade"
+                                       class="form-control"
+                                       value="1"
+                                       min="1"
+                                       required />
+                            </div>
+
+                            <div class="col-md-4">
+                                <button type="submit"
+                                        class="btn btn-primary w-100">
+                                    Adicionar Pedido
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                }
+
+                <hr class="my-4" />
+
+                <div class="d-flex gap-2">
+
+                    <a asp-action="Listar"
+                       class="btn btn-outline-secondary">
+                        Voltar
+                    </a>
+
+                    @if (Model.Status == StatusConta.Aberta)
+                    {
+                        <form asp-action="Fechar"
+                              asp-route-id="@Model.Id"
+                              method="post">
+
+                            <button type="submit"
+                                    class="btn btn-success">
+                                Fechar Conta
+                            </button>
+
+                        </form>
+                    }
+
+                    @if (Model.Status == StatusConta.Fechada)
+                    {
+                        <a asp-action="Excluir"
+                           asp-route-id="@Model.Id"
+                           class="btn btn-outline-danger">
+                            Excluir
+                        </a>
+                    }
+
+                </div>
+
             </div>
         </div>
-    </form>
-}
+
+    </div>
+</div>

@@ -20,6 +20,8 @@ public sealed class RepositorioContaEmOrm(ControleDeBarDbContext dbContext) :
         return registros
             .Include(c => c.Mesa)
             .Include(c => c.Garcom)
+            .Include(c => c.Pedidos)
+                .ThenInclude(p => p.Produto)
             .SingleOrDefault(c => c.Id == idSelecionado);
     }
 
