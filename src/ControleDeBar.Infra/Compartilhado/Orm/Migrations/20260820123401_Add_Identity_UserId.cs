@@ -20,21 +20,21 @@ namespace ControleDeBar.Infra.Compartilhado.Orm.Migrations
 
             migrationBuilder.AddColumn<Guid>(
                 name: "UserId",
-                table: "Produtos",
+                table: "TBProduto",
                 type: "uniqueidentifier",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.AddColumn<Guid>(
                 name: "UserId",
-                table: "Mesas",
+                table: "TBMesa",
                 type: "uniqueidentifier",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.AddColumn<Guid>(
                 name: "UserId",
-                table: "Garcons",
+                table: "TBGarcom",
                 type: "uniqueidentifier",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
@@ -49,15 +49,15 @@ namespace ControleDeBar.Infra.Compartilhado.Orm.Migrations
 
             migrationBuilder.DropColumn(
                 name: "UserId",
-                table: "Produtos");
+                table: "TBProduto");
 
             migrationBuilder.DropColumn(
                 name: "UserId",
-                table: "Mesas");
+                table: "TBMesa");
 
             migrationBuilder.DropColumn(
                 name: "UserId",
-                table: "Garcons");
+                table: "TBGarcom");
         }
     }
 }
