@@ -38,13 +38,17 @@ public sealed class RepositorioClienteEmOrmTests : RepositorioEmOrmBaseTests
     {
         Cliente cliente = new Cliente("Junior Testes");
         repositorio.Cadastrar(cliente);
+
         Cliente clienteAtualizado = new Cliente("João Testes");
 
         bool conseguiuEditar = repositorio.Editar(cliente.Id, clienteAtualizado);
         dbContext.ChangeTracker.Clear();
 
+        Cliente? clienteSelecionado = repositorio.SelecionarPorId(cliente.Id);
+
         Assert.IsTrue(conseguiuEditar);
-        Assert.AreEqual("João Testes", cliente.Nome);
+        Assert.IsNotNull(clienteSelecionado);
+        Assert.AreEqual("João Testes", clienteSelecionado.Nome);
     }
 
     [TestMethod]
@@ -63,12 +67,18 @@ public sealed class RepositorioClienteEmOrmTests : RepositorioEmOrmBaseTests
     [TestMethod]
     public void SelecionarTodos_RetornaClientes()
     {
-        Cliente cliente = new Cliente("Junior Testes");
-        repositorio.Cadastrar(cliente);
+        Cliente cliente1 = new Cliente("Junior Testes");
+        Cliente cliente2 = new Cliente("João Testes");
+        Cliente cliente3 = new Cliente("Maria Testes");
 
-        List<Cliente> clientes = repositorio.SelecionarTodos();
+        repositorio.Cadastrar(cliente1);
+        repositorio.Cadastrar(cliente2);
+        repositorio.Cadastrar(cliente3);
+
         dbContext.ChangeTracker.Clear();
 
-        Assert.HasCount(1, clientes);
+        List<Cliente> clientes = repositorio.SelecionarTodos();
+
+        Assert.HasCount(3, clientes);
     }
 }
