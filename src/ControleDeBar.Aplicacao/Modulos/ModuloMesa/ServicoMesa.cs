@@ -1,4 +1,5 @@
 using ControleDeBar.Aplicacao.Compartilhado;
+using ControleDeBar.Dominio.Modulos.ModuloConta;
 using ControleDeBar.Dominio.Modulos.ModuloMesa;
 using FluentResults;
 
@@ -7,10 +8,12 @@ namespace ControleDeBar.Aplicacao.Modulos.ModuloMesa;
 public class ServicoMesa : ServicoBase<Mesa>
 {
     private readonly IRepositorioMesa repositorioMesa;
+    private readonly IRepositorioConta repositorioConta;
 
-    public ServicoMesa(IRepositorioMesa repositorioMesa)
+    public ServicoMesa(IRepositorioMesa repositorioMesa, IRepositorioConta repositorioConta)
     {
         this.repositorioMesa = repositorioMesa;
+        this.repositorioConta = repositorioConta;
     }
 
     public Result Cadastrar(CadastrarMesaDto dto)
@@ -62,6 +65,9 @@ public class ServicoMesa : ServicoBase<Mesa>
         if (mesa == null)
             return Falha(string.Empty, "Mesa não encontrada.");
 
+        if (PossuiContasVinculadas(id))
+            return Falha(string.Empty, "Não é possível excluir esta mesa, pois ela possui contas vinculadas.");
+
         repositorioMesa.Excluir(id);
 
         return Result.Ok();
@@ -105,6 +111,12 @@ public class ServicoMesa : ServicoBase<Mesa>
                 m.Id != idIgnorado &&
                 NormalizarIdentificacao(m.Numero) == identificacaoNormalizada
             );
+    }
+
+    private bool PossuiContasVinculadas(Guid mesaId)
+    {
+        return repositorioConta.ExisteMesaContaAberta(mesaId);
+            
     }
 
     private static string NormalizarIdentificacao(string numero)

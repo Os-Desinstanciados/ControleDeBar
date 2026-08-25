@@ -1,5 +1,6 @@
 using FluentResults;
 using ControleDeBar.Dominio.Modulos.ModuloGarcom;
+using ControleDeBar.Dominio.Modulos.ModuloConta;
 using ControleDeBar.Aplicacao.Compartilhado;
 
 
@@ -8,14 +9,16 @@ namespace ControleDeBar.Aplicacao.Modulos.ModuloGarcom;
 public class ServicoGarcom : ServicoBase<Garcom>
 {
     private readonly IRepositorioGarcom repositorioGarcom;
+    private readonly IRepositorioConta repositorioConta;
     
 
     public ServicoGarcom(
-        IRepositorioGarcom repositorioGarcom
-        
+        IRepositorioGarcom repositorioGarcom,
+        IRepositorioConta repositorioConta
     )
     {
-        this.repositorioGarcom = repositorioGarcom;        
+        this.repositorioGarcom = repositorioGarcom;
+        this.repositorioConta = repositorioConta;        
     }
 
     public Result Cadastrar(CadastrarGarcomDto dto)
@@ -38,7 +41,7 @@ public class ServicoGarcom : ServicoBase<Garcom>
     public Result Editar(EditarGarcomDto dto)
     {
         if (ExisteGarcomComMesmoNome(dto.Nome, dto.Id))
-            return Falha(nameof(dto.Nome), "Já existe um garçom com este título.");
+            return Falha(nameof(dto.Nome), "Já existe um garçom com este nome.");
 
         Garcom garcomAtualizado = new Garcom(dto.Nome);
 
@@ -62,8 +65,8 @@ public class ServicoGarcom : ServicoBase<Garcom>
         if (garcom == null)
             return Falha(string.Empty, "Garçom não encontrado.");
 
-        //if (PossuiContasVinculadas(id))
-            //return Falha(string.Empty, "Não é possível excluir este garçom, pois ele possui contas vinculadas.");
+        if (PossuiContasVinculadas(id))
+            return Falha(string.Empty, "Não é possível excluir este garçom, pois ele possui contas vinculadas.");
 
         repositorioGarcom.Excluir(id);
 
@@ -100,12 +103,11 @@ public class ServicoGarcom : ServicoBase<Garcom>
             );
     }
 
-    //private bool PossuiContasVinculadas(Guid garcomId)
-    //{
-        //return repositorioConta
-          //  .SelecionarTodos()
-            //.Any(d => g.Garcons.Any(c => g.Id == garcomId));
-    //}
+    private bool PossuiContasVinculadas(Guid garcomId)
+    {
+        return repositorioConta.ExisteGarcomContaAberta(garcomId);
+            
+    }
 
     private static string NormalizarNome(string nome)
     {

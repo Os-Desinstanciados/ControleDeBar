@@ -1,4 +1,5 @@
 using ControleDeBar.Dominio.Modulos.ModuloConta;
+using ControleDeBar.Dominio.Modulos.ModuloGarcom;
 using ControleDeBar.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,5 +29,21 @@ public sealed class RepositorioContaEmOrm(ControleDeBarDbContext dbContext) :
     public Conta? SelecionarRegistroPorId(Guid contaId)
     {
         throw new NotImplementedException();
+    }
+
+    public bool ExisteGarcomContaAberta(Guid garcomId)
+    {
+        return registros.Any(c =>
+            c.Garcom.Id ==  garcomId &&
+            c.Status == StatusConta.Aberta
+        );
+    }
+
+    public bool ExisteMesaContaAberta(Guid mesaId)
+    {
+        return registros.Any(c =>
+            c.Mesa.Id == mesaId &&
+            c.Status == StatusConta.Aberta
+        );
     }
 }
