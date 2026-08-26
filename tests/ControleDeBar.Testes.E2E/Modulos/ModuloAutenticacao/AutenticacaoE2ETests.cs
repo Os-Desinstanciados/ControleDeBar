@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
-using GeradorDeProvas.Testes.E2E.Compartilhado;
+using ControleDeBar.Testes.E2E.Compartilhado;
+
 using Microsoft.Playwright;
 
 namespace ControleDeBar.Testes.E2E.Modulos.ModuloAutenticacao;

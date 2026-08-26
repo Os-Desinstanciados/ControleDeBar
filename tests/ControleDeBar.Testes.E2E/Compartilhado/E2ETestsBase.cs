@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
 
-namespace GeradorDeProvas.Testes.E2E.Compartilhado;
+namespace ControleDeBar.Testes.E2E.Compartilhado;
 
 public abstract class E2ETestsBase : PageTest
 {
