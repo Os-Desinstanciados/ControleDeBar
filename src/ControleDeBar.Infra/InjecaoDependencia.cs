@@ -1,7 +1,7 @@
 using ControleDeBar.Dominio.Modulos.ModuloGarcom;
 using ControleDeBar.Infra.Modulos.ModuloGarcom;
 using ControleDeBar.Dominio.Modulos.ModuloCliente;
-using ControleDeBar.Infra.Comartilhado.Logging;
+using ControleDeBar.Infra.Compartilhado.Logging;
 using ControleDeBar.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using ControleDeBar.Dominio.Modulos.ModuloConta;
 using ControleDeBar.Infra.Modulos.ModuloConta;
 using ControleDeBar.Infra.Modulos.ModuloPedido;
+using Microsoft.Extensions.Hosting;
 
 namespace ControleDeBar.Infra;
 
@@ -22,11 +23,12 @@ public static class InjecaoDependencia
     public static void AddInfraRepositories(
         this IServiceCollection services,
         IConfiguration configuration,
-        ILoggingBuilder logging
+        ILoggingBuilder logging,
+        IHostEnvironment environment
     )
     {
         // Injeta logs do Serilog
-        Log.Logger = SerilogFactory.Create(configuration);
+        Log.Logger = SerilogFactory.Create(configuration, environment);
 
         logging.ClearProviders();
 
