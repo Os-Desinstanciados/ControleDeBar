@@ -29,33 +29,20 @@ public sealed class MesaE2ETests : E2ETestsBase
     public async Task DeveCadastrar_Mesa_ComDadosValidos()
     {
         // Arrange
-        await RegistrarEEntrarAsync("mesa.cadastro@teste.local", "Senha123!");
+        await RegistrarEEntrarAsync("mesa.cadastro@teste.local", "Senha123!");        
 
-        await Page.GotoAsync($"{UrlBase}/Mesa/Listar");
+        MesaFormPage formPage = new(Page, UrlBase);
+        MesaListarPage listarPage = new(Page, UrlBase);
 
         // Act
-        await Page.GetByRole(AriaRole.Link, new() { Name = "Cadastrar Nova" })
-            .ClickAsync();
-
-        await Page.GetByLabel("Número", new() { Exact = true }).FillAsync("1");
-        await Page.GetByLabel("Número de Lugares").FillAsync("2");
-        await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" })
-            .ClickAsync();
+        await formPage.IrParaCadastroAsync();
+        await formPage.PreencherAsync("1", "2");
+        await formPage.ConfirmarAsync();
 
         // Assert
-        Assert.AreEqual(
-            "/Mesa/Listar",
-            new Uri(Page.Url).AbsolutePath
-        );
-
-        await Expect(Page.GetByText("1", new() { Exact = true }))
-            .ToBeVisibleAsync();
-        
-        await Expect(Page.GetByText("2", new() { Exact = true }))
-            .ToBeVisibleAsync();
-
-        await Expect(Page.GetByText("Nenhuma mesa cadastrada.", new() { Exact = true }))
-            .Not.ToBeVisibleAsync();
+        await Expect(Page).ToHaveURLAsync(listarPage.Url);
+        await Expect(listarPage.NumeroDaMesa("1")).ToBeVisibleAsync();
+        await Expect(listarPage.EstadoVazio).Not.ToBeVisibleAsync();
     }
 
     [TestMethod]

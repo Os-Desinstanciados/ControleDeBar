@@ -1,3 +1,4 @@
+using ControleDeBar.Dominio.Modulos.ModuloGarcom;
 using ControleDeBar.Testes.E2E.Compartilhado;
 using Microsoft.Playwright;
 
@@ -11,25 +12,17 @@ public sealed class GarcomE2ETests : E2ETestsBase
     {
         // Arrange
         await RegistrarEEntrarAsync("garcom.listagem@teste.local", "Senha123!");
+        GarcomListarPage listarPage = new(Page, UrlBase);        
 
         // Act
-        await Page.GotoAsync($"{UrlBase}/Garcom/Listar");
+        await listarPage.IrParaAsync();
 
         // Assert
-        Assert.AreEqual(
-            "/Garcom/Listar",
-            new Uri(Page.Url).AbsolutePath
-        );
+        await Expect(Page).ToHaveURLAsync(listarPage.Url);
 
         // Heading = h1, h2, h3, h4, h5, h6
-        await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Listagem de Garçons" }))
-            .ToBeVisibleAsync();
-
-        await Expect(Page.GetByRole(AriaRole.Link, new() { Name = "Cadastrar Novo" }))
-            .ToBeVisibleAsync();
-
-        await Expect(Page.GetByText("Nenhum garçom cadastrado.", new() { Exact = true }))
-            .ToBeVisibleAsync();
+        await Expect(listarPage.Nome).ToBeVisibleAsync();        
+        await Expect(listarPage.EstadoVazio).ToBeVisibleAsync();
     }
 
     [TestMethod]
@@ -38,27 +31,18 @@ public sealed class GarcomE2ETests : E2ETestsBase
         // Arrange
         await RegistrarEEntrarAsync("garcom.cadastro@teste.local", "Senha123!");
 
-        await Page.GotoAsync($"{UrlBase}/Garcom/Listar");
+        GarcomFormPage formPage = new(Page, UrlBase);
+        GarcomListarPage listarPage = new(Page, UrlBase);
 
         // Act
-        await Page.GetByRole(AriaRole.Link, new() { Name = "Cadastrar Novo" })
-            .ClickAsync();
-
-        await Page.GetByLabel("Nome").FillAsync("João Alves");
-        await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" })
-            .ClickAsync();
+        await formPage.IrParaCadastroAsync();
+        await formPage.PreencherNomeAsync("João Alves");
+        await formPage.ConfirmarAsync();
 
         // Assert
-        Assert.AreEqual(
-            "/Garcom/Listar",
-            new Uri(Page.Url).AbsolutePath
-        );
-
-        await Expect(Page.GetByText("João Alves", new() { Exact = true }))
-            .ToBeVisibleAsync();
-
-        await Expect(Page.GetByText("Nenhum garçom cadastrado.", new() { Exact = true }))
-            .Not.ToBeVisibleAsync();
+        await Expect(Page).ToHaveURLAsync(listarPage.Url);
+        await Expect(listarPage.NomeDoGarcom("João Alves")).ToBeVisibleAsync();
+        await Expect(listarPage.EstadoVazio).Not.ToBeVisibleAsync();
     }
 
     [TestMethod]
