@@ -11,25 +11,18 @@ public sealed class MesaE2ETests : E2ETestsBase
     {
         // Arrange
         await RegistrarEEntrarAsync("mesa.listagem@teste.local", "Senha123!");
+        MesaListarPage listarPage = new(Page, UrlBase);
 
         // Act
-        await Page.GotoAsync($"{UrlBase}/Mesa/Listar");
+        await listarPage.IrParaAsync();
 
         // Assert
-        Assert.AreEqual(
-            "/Mesa/Listar",
-            new Uri(Page.Url).AbsolutePath
-        );
+        await Expect(Page).ToHaveURLAsync(listarPage.Url);
 
         // Heading = h1, h2, h3, h4, h5, h6
-        await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Listagem de Mesas" }))
-            .ToBeVisibleAsync();
-
-        await Expect(Page.GetByRole(AriaRole.Link, new() { Name = "Cadastrar Nova" }))
-            .ToBeVisibleAsync();
-
-        await Expect(Page.GetByText("Nenhuma mesa cadastrada.", new() { Exact = true }))
-            .ToBeVisibleAsync();
+        await Expect(listarPage.Numero).ToBeVisibleAsync();
+        await Expect(listarPage.CadastarNova).ToBeVisibleAsync();
+        await Expect(listarPage.EstadoVazio).ToBeVisibleAsync();
     }
 
     [TestMethod]
