@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using ControleDeBar.Testes.E2E.Compartilhado;
 using Microsoft.Playwright;
 
@@ -21,6 +22,7 @@ public sealed class MesaE2ETests : E2ETestsBase
 
         // Heading = h1, h2, h3, h4, h5, h6
         await Expect(listarPage.Numero).ToBeVisibleAsync();
+        await Expect(listarPage.NumeroLugares).ToBeVisibleAsync();
         await Expect(listarPage.CadastarNova).ToBeVisibleAsync();
         await Expect(listarPage.EstadoVazio).ToBeVisibleAsync();
     }
@@ -42,6 +44,7 @@ public sealed class MesaE2ETests : E2ETestsBase
         // Assert
         await Expect(Page).ToHaveURLAsync(listarPage.Url);
         await Expect(listarPage.NumeroDaMesa("1")).ToBeVisibleAsync();
+        await Expect(listarPage.LugaresDaMesa("2")).ToBeVisibleAsync();
         await Expect(listarPage.EstadoVazio).Not.ToBeVisibleAsync();
     }
 
@@ -52,29 +55,20 @@ public sealed class MesaE2ETests : E2ETestsBase
         await RegistrarEEntrarAsync("mesa.edicao@teste.local", "Senha123!");
         await CadastrarMesaAsync("1","2");
 
-        ILocator card = Page.Locator(".card").Filter(new() { HasText = "1" });
-        await card.GetByRole(AriaRole.Link, new() { Name = "Editar", Exact = true }).ClickAsync();
+        MesaFormPage formPage = new(Page, UrlBase);
+        MesaListarPage listarPage = new(Page, UrlBase);
 
         // Act
-        await Page.GetByLabel("Número", new() { Exact = true }).FillAsync("3");
-        await Page.GetByLabel("Número de Lugares").FillAsync("4");
-        await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" })
-            .ClickAsync();
+        await listarPage.EditarAsync("1");       
+        await formPage.PreencherAsync("3", "4");
+        await formPage.ConfirmarAsync();
 
         // Assert
-        Assert.AreEqual(
-            "/Mesa/Listar",
-            new Uri(Page.Url).AbsolutePath
-        );
-
-        await Expect(Page.GetByText("3", new() { Exact = true }))
-            .ToBeVisibleAsync();
-
-        await Expect(Page.GetByText("4", new() { Exact = true }))
-            .ToBeVisibleAsync();
-
-        await Expect(Page.GetByText("Nenhuma mesa cadastrada.", new() { Exact = true }))
-            .Not.ToBeVisibleAsync();
+        await Expect(Page).ToHaveURLAsync(listarPage.Url);
+        await Expect(listarPage.NumeroDaMesa("3")).ToBeVisibleAsync();
+        await Expect(listarPage.NumeroDaMesa("1")).Not.ToBeVisibleAsync();
+        await Expect(listarPage.LugaresDaMesa("4")).ToBeVisibleAsync();
+        await Expect(listarPage.LugaresDaMesa("2")).Not.ToBeVisibleAsync();
     }
 
     [TestMethod]
@@ -84,26 +78,25 @@ public sealed class MesaE2ETests : E2ETestsBase
         await RegistrarEEntrarAsync("mesa.exclusao@teste.local", "Senha123!");
         await CadastrarMesaAsync("1", "2");
 
-        ILocator card = Page.Locator(".card").Filter(new() { HasText = "1" });
-        await card.GetByRole(AriaRole.Link, new() { Name = "Excluir", Exact = true }).ClickAsync();
+        MesaListarPage listarPage = new(Page, UrlBase);
+        MesaExcluirPage excluirPage = new(Page);
 
         // Act
-        await Expect(Page.GetByText("Deseja realmente excluir esta mesa?", new() { Exact = true }))
-            .ToBeVisibleAsync();
+        await listarPage.ExcluirAsync("1");
 
-        await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
-
-        // Assert
-        Assert.AreEqual(
-            "/Mesa/Listar",
-            new Uri(Page.Url).AbsolutePath
+        // Act
+        await Expect(Page).ToHaveURLAsync(
+            new Regex($"{Regex.Escape(UrlBase)}/Mesa/Excluir/.*")
         );
 
-        await Expect(Page.GetByText("1", new() { Exact = true }))
-            .Not.ToBeVisibleAsync();
+        await Expect(excluirPage.MensagemConfirmacao).ToBeVisibleAsync();
 
-        await Expect(Page.GetByText("Nenhuma mesa cadastrada.", new() { Exact = true }))
-            .ToBeVisibleAsync();
+        await excluirPage.ConfirmarAsync();
+
+        // Assert
+        await Expect(Page).ToHaveURLAsync(listarPage.Url);
+        await Expect(listarPage.NumeroDaMesa("1")).Not.ToBeVisibleAsync();
+        await Expect(listarPage.EstadoVazio).ToBeVisibleAsync();
     }
 
     private async Task CadastrarMesaAsync(string numero, string numeroLugares)
