@@ -13,6 +13,11 @@ public sealed class MesaListarPage(
         AriaRole.Heading,
         new() { Name = "Listagem de Mesas" }
     );
+    
+    public ILocator NumeroLugares => page.GetByRole(
+        AriaRole.Heading,
+        new() { Name = "Listagem de Mesas" }
+    );
 
     public ILocator CadastarNova => page.GetByRole(
         AriaRole.Link,
@@ -29,6 +34,11 @@ public sealed class MesaListarPage(
         new() { Name = numero, Exact = true }
     );
 
+    public ILocator LugaresDaMesa(string numeroLugares) => page.GetByRole(
+        AriaRole.Heading,
+        new() { Name = numeroLugares, Exact = true }
+    );
+
     public async Task IrParaAsync()
     {
         await page.GotoAsync(Url);
@@ -40,6 +50,7 @@ public sealed class MesaListarPage(
             AriaRole.Link,
             new() { Name = "Editar", Exact = true }
         ).ClickAsync();
+        
     }
 
     public async Task ExcluirAsync(string numero)
@@ -56,4 +67,5 @@ public sealed class MesaListarPage(
 
         return page.Locator(".card").Filter(new() { Has = numeroMesa });
     }
+    
 }

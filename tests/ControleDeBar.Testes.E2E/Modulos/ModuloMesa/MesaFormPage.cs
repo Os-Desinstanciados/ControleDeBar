@@ -9,6 +9,8 @@ public sealed class MesaFormPage(
 {
     public string UrlCadastrar => $"{urlBase}/Mesa/Cadastrar";
     public string UrlEditar => $"{urlBase}/Mesa/Editar";
+    public ILocator Numero => page.GetByLabel("Número", new() { Exact = true});
+    public ILocator NumeroLugares => page.GetByLabel("Número de Lugares");
 
     public async Task IrParaCadastroAsync()
     {
@@ -22,8 +24,8 @@ public sealed class MesaFormPage(
 
     public async Task PreencherAsync(string numero, string numeroLugares)
     {
-        await page.GetByLabel("Número", new() { Exact = true }).FillAsync(numero);
-        await page.GetByLabel("Número de Lugares").FillAsync(numeroLugares);
+        await Numero.FillAsync(numero);
+        await NumeroLugares.FillAsync(numeroLugares);
     }
 
     public async Task ConfirmarAsync()

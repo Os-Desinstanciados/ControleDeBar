@@ -9,6 +9,8 @@ public sealed class GarcomFormPage(
 {
     public string UrlCadastrar => $"{urlBase}/Garcom/Cadastrar";
     public string UrlEditar => $"{urlBase}/Garcom/Editar";
+    public ILocator Nome => page.GetByLabel("Nome");
+    
 
     public async Task IrParaCadastroAsync()
     {
@@ -22,7 +24,7 @@ public sealed class GarcomFormPage(
 
     public async Task PreencherNomeAsync(string nome)
     {
-        await page.GetByLabel("Nome").FillAsync(nome);
+        await Nome.FillAsync(nome);
     }
 
     public async Task ConfirmarAsync()

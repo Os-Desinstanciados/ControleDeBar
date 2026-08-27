@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using ControleDeBar.Dominio.Modulos.ModuloGarcom;
 using ControleDeBar.Testes.E2E.Compartilhado;
 using Microsoft.Playwright;
@@ -52,25 +53,18 @@ public sealed class GarcomE2ETests : E2ETestsBase
         await RegistrarEEntrarAsync("garcom.edicao@teste.local", "Senha123!");
         await CadastrarGarcomAsync("João Alves");
 
-        ILocator card = Page.Locator(".card").Filter(new() { HasText = "João Alves" });
-        await card.GetByRole(AriaRole.Link, new() { Name = "Editar", Exact = true }).ClickAsync();
+        GarcomFormPage formPage = new(Page, UrlBase);
+        GarcomListarPage listarPage = new(Page, UrlBase);
 
         // Act
-        await Page.GetByLabel("Nome").FillAsync("José Silva");
-        await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" })
-            .ClickAsync();
+        await listarPage.EditarAsync("João Alves");       
+        await formPage.PreencherNomeAsync("José Silva");
+        await formPage.ConfirmarAsync();
 
         // Assert
-        Assert.AreEqual(
-            "/Garcom/Listar",
-            new Uri(Page.Url).AbsolutePath
-        );
-
-        await Expect(Page.GetByText("José Silva", new() { Exact = true }))
-            .ToBeVisibleAsync();
-
-        await Expect(Page.GetByText("João Alves", new() { Exact = true }))
-            .Not.ToBeVisibleAsync();
+        await Expect(Page).ToHaveURLAsync(listarPage.Url);
+        await Expect(listarPage.NomeDoGarcom("José Silva")).ToBeVisibleAsync();
+        await Expect(listarPage.NomeDoGarcom("João Alves")).Not.ToBeVisibleAsync();
     }
 
     [TestMethod]
@@ -80,28 +74,25 @@ public sealed class GarcomE2ETests : E2ETestsBase
         await RegistrarEEntrarAsync("garcom.exclusao@teste.local", "Senha123!");
         await CadastrarGarcomAsync("João Alves");
 
-        ILocator card = Page.Locator(".card").Filter(new() { HasText = "João Alves" });
-        await card.GetByRole(AriaRole.Link, new() { Name = "Excluir", Exact = true }).ClickAsync();
+        GarcomListarPage listarPage = new(Page, UrlBase);
+        GarcomExcluirPage excluirPage = new(Page);
 
         // Act
-        await Expect(Page.GetByText("Deseja realmente excluir este garçom?", new() { Exact = true }))
-            .ToBeVisibleAsync();
-
-        await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
-
-        // Assert
-        Assert.AreEqual(
-            "/Garcom/Listar",
-            new Uri(Page.Url).AbsolutePath
+        await listarPage.ExcluirAsync("João Alves");
+        
+        await Expect(Page).ToHaveURLAsync(
+            new Regex($"{Regex.Escape(UrlBase)}/Garcom/Excluir/.*")
         );
 
-        await Expect(Page.GetByText("João Alves", new() { Exact = true }))
-            .Not.ToBeVisibleAsync();
+        await Expect(excluirPage.MensagemConfirmacao).ToBeVisibleAsync();
+        await excluirPage.ConfirmarAsync();
 
-        await Expect(Page.GetByText("Nenhum garçom cadastrado.", new() { Exact = true }))
-            .ToBeVisibleAsync();
+        // Assert
+        await Expect(Page).ToHaveURLAsync(listarPage.Url);
+        await Expect(listarPage.NomeDoGarcom("João Alves")).Not.ToBeVisibleAsync();
+        await Expect(listarPage.EstadoVazio).ToBeVisibleAsync();
     }
-
+        
     private async Task CadastrarGarcomAsync(string nome)
     {
         await Page.GotoAsync($"{UrlBase}/Garcom/Cadastrar");
