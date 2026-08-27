@@ -1,3 +1,4 @@
+using ControleDeBar.Testes.E2E.Modulos.ModuloAutenticacao;
 using ControledeDeBar.Testes.E2E.Compartilhado;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -60,10 +61,10 @@ public abstract class E2ETestsBase : PageTest
     {
         await RegistrarUsuarioAsync(email, senha);
 
-        await Page.GotoAsync($"{UrlBase}/Autenticacao/Entrar");
-        await Page.GetByLabel("E-mail").FillAsync(email);
-        await Page.GetByLabel("Senha", new() { Exact = true }).FillAsync(senha);
+        EntrarPage entrarPage = new(Page, UrlBase);
 
-        await Page.GetByRole(AriaRole.Button, new() { Name = "Entrar" }).ClickAsync();
+        await entrarPage.IrParaAsync();
+        await entrarPage.PreencherAsync(email, senha);
+        await entrarPage.ConfirmarAsync();
     }
 }

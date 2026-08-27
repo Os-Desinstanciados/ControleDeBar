@@ -92,7 +92,7 @@ public sealed class GarcomE2ETests : E2ETestsBase
         await Expect(listarPage.NomeDoGarcom("João Alves")).Not.ToBeVisibleAsync();
         await Expect(listarPage.EstadoVazio).ToBeVisibleAsync();
     }
-        
+
     private async Task CadastrarGarcomAsync(string nome)
     {
         await Page.GotoAsync($"{UrlBase}/Garcom/Cadastrar");
