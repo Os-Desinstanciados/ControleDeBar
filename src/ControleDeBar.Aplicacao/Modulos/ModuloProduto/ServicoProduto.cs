@@ -8,10 +8,15 @@ namespace ControleDeBar.Aplicacao.Modulos.ModuloProduto;
 public class ServicoProduto : ServicoBase<Produto>
 {
     private readonly IRepositorioProduto repositorioProduto;
+    private readonly IRepositorioPedido repositorioPedido;
 
-    public ServicoProduto(IRepositorioProduto repositorioProduto)
+    public ServicoProduto(
+        IRepositorioProduto repositorioProduto,
+        IRepositorioPedido repositorioPedido
+    )
     {
         this.repositorioProduto = repositorioProduto;
+        this.repositorioPedido = repositorioPedido;
     }
 
     public Result Cadastrar(CadastrarProdutoDto dto)
@@ -64,6 +69,12 @@ public class ServicoProduto : ServicoBase<Produto>
         if (produto == null)
             return Falha(string.Empty, "Produto não encontrado.");
 
+        if (PossuiPedidosVinculados(id))
+            return Falha(
+                string.Empty,
+                "Não é possível excluir este produto, pois ele possui pedidos vinculados."
+            );
+
         repositorioProduto.Excluir(id);
 
         return Result.Ok();
@@ -109,5 +120,11 @@ public class ServicoProduto : ServicoBase<Produto>
             produto.Nome,
             produto.Preco
         ));
+    }
+
+    private bool PossuiPedidosVinculados(Guid produtoId)
+    {
+        return repositorioPedido.SelecionarTodos()
+            .Any(p => p.ProdutoId == produtoId);
     }
 }
