@@ -20,9 +20,8 @@ public sealed class ClienteCongiguration : IEntityTypeConfiguration<Cliente>
             .HasMaxLength(100)
             .IsRequired();
 
-        // Índice de exclusividade
-        builder.HasIndex(c => c.Nome)
+        builder.HasIndex(c => new { c.UserId, c.Nome })
             .IsUnique()
-            .HasDatabaseName("UQ_TBCliente_Nome");
+            .HasDatabaseName("UQ_TBCliente_UserId_Nome");
     }
 }

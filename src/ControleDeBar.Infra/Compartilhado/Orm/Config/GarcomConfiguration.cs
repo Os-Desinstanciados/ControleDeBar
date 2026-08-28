@@ -20,8 +20,8 @@ public sealed class GarcomConfiguration : IEntityTypeConfiguration<Garcom>
             .HasMaxLength(50)
             .IsRequired();
 
-        builder.HasIndex(g => g.Nome)
+        builder.HasIndex(g => new { g.UserId, g.Nome })
             .IsUnique()
-            .HasDatabaseName("UQ_TBGarcom_Nome");
+            .HasDatabaseName("UQ_TBGarcom_UserId_Nome");
     }
 }

@@ -27,8 +27,8 @@ public sealed class MesaConfiguration : IEntityTypeConfiguration<Mesa>
         builder.Property(m => m.StatusMesa)
             .IsRequired();
 
-        builder.HasIndex(m => m.Numero)
+        builder.HasIndex(m => new { m.UserId, m.Numero })
             .IsUnique()
-            .HasDatabaseName("UQ_TBMesa_Numero");
+            .HasDatabaseName("UQ_TBMesa_UserId_Numero");
     }
 }

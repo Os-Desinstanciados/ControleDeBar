@@ -24,8 +24,8 @@ public sealed class ProdutoConfiguration : IEntityTypeConfiguration<Produto>
             .HasColumnType("decimal(10,2)")
             .IsRequired();
 
-        builder.HasIndex(p => p.Nome)
+        builder.HasIndex(p => new { p.UserId, p.Nome })
             .IsUnique()
-            .HasDatabaseName("UQ_TBProduto_Nome");
+            .HasDatabaseName("UQ_TBProduto_UserId_Nome");
     }
 }
